@@ -13,24 +13,18 @@ import OrderPage from "../features/orders/ui/pages/OrderPage";
 import { hydrateUser } from "../features/auth/api/authApi";
 import { useDispatch } from "react-redux";
 import { addUser } from "../features/auth/state/authSlice";
+import { hydrateUserAction } from "../features/auth/state/authAction";
 const AppRoutes = () => {
-
-    let dispatch = useDispatch()
-    useEffect(()=>{
-        (
-            async ()=>{
-                try {
-                    let responce = await hydrateUser();
-                    console.log(responce);
-                    dispatch(addUser(responce))
-                    
-                } catch (error) {
-                    console.log(error);
-                    
-                }
-            }
-        )()
-    },[])
+  let dispatch = useDispatch();
+  useEffect(() => {
+    (() => {
+      try {
+        dispatch(hydrateUserAction());
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
   const router = createBrowserRouter([
     {
       path: "/",
@@ -54,31 +48,31 @@ const AppRoutes = () => {
     },
     {
       path: "/main",
-      element: <MainProtected/>,
+      element: <MainProtected />,
       children: [
         {
-            path: '',
-            element: <MainLayout />,
-            children: [
-                {
-                    path: '',
-                    element: <HomePage/>,
-                },
-                {
-                    path: 'product',
-                    element: <ProductPage/>,
-                },
-                {
-                    path: 'cart',
-                    element: <CartPage/>,
-                },
-                {
-                    path: 'orders',
-                    element: <OrderPage/>,
-                },
-            ],
-        }
-      ]
+          path: "",
+          element: <MainLayout />,
+          children: [
+            {
+              path: "",
+              element: <HomePage />,
+            },
+            {
+              path: "product",
+              element: <ProductPage />,
+            },
+            {
+              path: "cart",
+              element: <CartPage />,
+            },
+            {
+              path: "orders",
+              element: <OrderPage />,
+            },
+          ],
+        },
+      ],
     },
   ]);
   return <RouterProvider router={router} />;

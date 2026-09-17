@@ -4,6 +4,7 @@ import { loginUserApi } from "../api/authApi";
 import { useDispatch } from "react-redux";
 import { addUser } from "../state/authSlice";
 import { toast } from "react-toastify";
+import { loginUserAction } from "../state/authAction";
 export const useAuth = () => {
     const dispatch = useDispatch();
   const {
@@ -22,9 +23,7 @@ export const useAuth = () => {
     
    try {
      //api call
-    let responce = await loginUserApi(data)
-    dispatch(addUser(responce))
-    toast.success("Logedin successfully")
+    dispatch(loginUserAction(data))
     navigate('/main')
    } catch (error) {
     console.log(error);
